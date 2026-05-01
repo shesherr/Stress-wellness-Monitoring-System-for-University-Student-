@@ -1,0 +1,64 @@
+﻿@model List<SWMSU.Models.StudentAppointmentVM>
+
+@{
+    ViewData["Title"] = "Student List";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="mb-3">Student Appointment List</h2>
+
+<table id="patienttable" class="table table-bordered table-striped" width="100%">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Student ID</th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Completed At</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            int i = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@item.UserName</td>
+                    <td>@item.Email</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.StudentId</td>
+                    <td>@item.Department</td>
+                    <td>@item.AppointmentDate.ToString("dd-MM-yyyy")</td>
+                    <td>@item.AppointmentTime</td>
+                    <td>@item.AppointmentStatus</td>
+                    <td>@(item.CompletedAt?.ToString("dd-MM-yyyy") ?? "-")</td>
+                </tr>
+                i++;
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="10" class="text-center">
+                    No data found
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#patienttable').DataTable();
+        });
+    </script>
+}

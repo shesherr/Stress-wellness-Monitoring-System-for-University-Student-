@@ -1,0 +1,139 @@
+﻿@model SWMSU.Models.Psychologists
+
+@{
+    ViewData["Title"] = "Add Psychologist";
+}
+
+<div class="container d-flex justify-content-center align-items-start" style="min-height: 80vh; padding-top: 50px;">
+    <div class="col-md-6">
+        <div class="card shadow-sm rounded p-4">
+            <h2 class="mb-4 text-primary text-center">Add Psychologist</h2>
+
+            <form asp-action="PsyRegistration" method="post" class="needs-validation" novalidate>
+                <!-- Name -->
+                <div class="mb-3">
+                    <label asp-for="PsychoName" class="form-label">Name</label>
+                    <input asp-for="PsychoName" class="form-control" placeholder="Enter name" />
+                    <span asp-validation-for="PsychoName" class="text-danger"></span>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label asp-for="PsychoEmail" class="form-label">Email</label>
+                    <input asp-for="PsychoEmail" class="form-control" placeholder="Enter email" />
+                    <span asp-validation-for="PsychoEmail" class="text-danger"></span>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label asp-for="PsychoPassword" class="form-label">Password</label>
+                    <input asp-for="PsychoPassword" type="password" class="form-control" placeholder="Enter password" />
+                    <span asp-validation-for="PsychoPassword" class="text-danger"></span>
+                </div>
+
+                <!-- Phone -->
+                <div class="mb-3">
+                    <label asp-for="PsychoPhone" class="form-label">Phone</label>
+                    <input asp-for="PsychoPhone" class="form-control" placeholder="Enter phone number" />
+                </div>
+
+                <!-- Qualification -->
+                <div class="mb-3">
+                    <label asp-for="Qualification" class="form-label">Qualification</label>
+                    <input asp-for="Qualification" class="form-control" placeholder="Enter qualification" />
+                </div>
+
+                <!-- Specialization -->
+                <div class="mb-3">
+                    <label asp-for="Specialization" class="form-label">Specialization</label>
+                    <input asp-for="Specialization" class="form-control" placeholder="Enter specialization" />
+                </div>
+
+                <!-- Experience -->
+                <div class="mb-3">
+                    <label asp-for="Experience" class="form-label">Experience (Years)</label>
+                    <input asp-for="Experience" class="form-control" type="number" placeholder="Enter experience" />
+                </div>
+
+                <!-- Address -->
+                <div class="mb-3">
+                    <label asp-for="PsychoPermanentAddress" class="form-label">Permanent Address</label>
+                    <textarea asp-for="PsychoPermanentAddress" class="form-control" rows="3" placeholder="Enter address"></textarea>
+                </div>
+
+                <input asp-for="Role" type="hidden" value="Psychologist" />
+
+                <button type="submit" class="btn btn-primary mt-3 w-100">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        (function () {
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+}
+
+<style>
+    body {
+        background-color: #f8f9fa; /* subtle gray background */
+    }
+
+    .card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        font-weight: 600;
+        color: #0d6efd;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: #495057;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+
+    .btn-primary {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0b5ed7;
+        border-color: #0a58ca;
+    }
+
+    .text-danger {
+        font-size: 0.875rem;
+    }
+</style>

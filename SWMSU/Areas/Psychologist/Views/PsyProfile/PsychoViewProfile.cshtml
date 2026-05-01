@@ -1,0 +1,127 @@
+﻿@model SWMSU.Models.PsychologyProfile
+
+@{
+    ViewData["Title"] = "Psychologist Profile";
+}
+
+<style>
+    .profile-container {
+        display: flex;
+        gap: 40px;
+        padding: 40px;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    .profile-left {
+        width: 35%;
+    }
+
+        .profile-left h2 {
+            color: #17a2b8;
+            margin-bottom: 20px;
+        }
+
+        .profile-left p {
+            margin: 6px 0;
+            font-size: 15px;
+        }
+
+    .profile-center {
+        width: 40%;
+    }
+
+        .profile-center h3 {
+            margin-bottom: 10px;
+        }
+
+    .profile-right {
+        width: 25%;
+        background: #f8fafc; /* soft off-white */
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        text-align: center;
+        padding: 30px 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+        .profile-right img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 4px solid #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .profile-right h4 {
+            margin-top: 10px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            color: #6b7280;
+        }
+
+        .profile-right p {
+            margin-top: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #0f766e; /* calm teal */
+        }
+
+    .label {
+        font-weight: bold;
+    }
+</style>
+
+<div class="profile-container">
+
+    <!-- ================= LEFT : DETAILS ================= -->
+    <div class="profile-left">
+        <h2>Profile</h2>
+
+        <p><span class="label">Email:</span> @Model.Email</p>
+        <p><span class="label">Phone:</span> @Model.PhoneNumber</p>
+        <p><span class="label">Age:</span> @Model.Age</p>
+        <p><span class="label">Blood Group:</span> @Model.BloodGroup</p>
+        <p><span class="label">Address:</span> @Model.Address</p>
+
+        <p><span class="label">Severity:</span> @Model.SeverityType</p>
+        <p><span class="label">Experience:</span> @Model.ExperienceYears Years</p>
+        <p><span class="label">Qualification:</span> @Model.Qualification</p>
+        <p><span class="label">Specialization:</span> @Model.Specialization</p>
+    </div>
+
+    <!-- ================= CENTER : ABOUT ================= -->
+    <div class="profile-center">
+        <h3>About Me</h3>
+        <p>@Model.Bio</p>
+
+        <br />
+        <p>
+            <span class="label">Joined:</span>
+            @Model.CreatedAt.ToString("dd MMM yyyy")
+        </p>
+    </div>
+
+    <!-- ================= RIGHT : IMAGE ================= -->
+    <div class="profile-right">
+
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="~/Images/Psychology/@Model.ImageUrl"
+                 alt="Profile Image" />
+        }
+        else
+        {
+            <img src="~/Images/Psychology/default.png"
+                 alt="Default Profile Image" />
+        }
+
+        <h4>HELLO, I'M Our Psychologist</h4>
+        <!--<p>@Model.SeverityType Psychologist</p>-->
+
+    </div>
+
+</div>

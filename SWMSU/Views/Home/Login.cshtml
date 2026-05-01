@@ -1,0 +1,71 @@
+﻿@model SWMSU.Models.UserVM
+
+@{
+    ViewData["Title"] = "User Login";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header text-center bg-gradient-primary text-white rounded-top-4 py-4">
+                    <h3 class="mb-0">User Login</h3>
+                </div>
+
+                <div class="card-body p-5">
+
+                    @if (TempData["error"] != null)
+                    {
+                        <div class="alert alert-danger text-center">
+                            @TempData["error"]
+                        </div>
+                    }
+
+                    <form asp-action="Login" asp-controller="Home" method="post" class="needs-validation" novalidate>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" type="email" class="form-control shadow-sm" placeholder="Enter Email" required />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">Password</label>
+                            <input asp-for="Password" type="password" class="form-control shadow-sm" placeholder="Enter Password" required />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-gradient-primary w-100 py-2 mt-4 text-white fw-bold rounded-3">
+                            Login
+                        </button>
+
+                    </form>
+                </div>
+
+                <div class="card-footer text-center py-3 bg-light rounded-bottom-4">
+                    Don't have an account?
+                    <a asp-action="Registration" asp-controller="Home" class="text-primary fw-bold">Register Now</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-gradient-primary {
+        background: linear-gradient(135deg, #4e73df, #1cc88a);
+        border: none;
+    }
+
+    .btn-gradient-primary:hover {
+        opacity: 0.9;
+    }
+
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #4e73df, #1cc88a) !important;
+    }
+</style>

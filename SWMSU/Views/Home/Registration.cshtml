@@ -1,0 +1,131 @@
+﻿@model SWMSU.Models.UserVM
+
+@{
+    ViewData["Title"] = "User Registration";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header text-center bg-gradient-primary text-white rounded-top-4 py-4">
+                    <h3 class="mb-0">User Registration</h3>
+                </div>
+
+                <div class="card-body p-5">
+
+                    @if (TempData["error"] != null)
+                    {
+                        <div class="alert alert-danger text-center">
+                            @TempData["error"]
+                        </div>
+                    }
+
+                    <form asp-controller="Home" asp-action="Registration" method="post" class="needs-validation" novalidate>
+
+                        <!-- Username -->
+                        <div class="mb-3">
+                            <label asp-for="UserName" class="form-label">Username</label>
+                            <input asp-for="UserName" class="form-control shadow-sm" placeholder="Enter Username" required />
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" type="email" class="form-control shadow-sm" placeholder="Enter Email" required />
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">Password</label>
+                            <input asp-for="Password" type="password" class="form-control shadow-sm" placeholder="Enter Password" required />
+                        </div>
+
+                        <!-- Phone -->
+                        @* <div class="mb-3">
+                            <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+                            <input asp-for="PhoneNumber" type="number" class="form-control shadow-sm" placeholder="Phone Number" required />
+                        </div> *@
+                        <div class="mb-3">
+                            <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+                            <input asp-for="PhoneNumber"
+                                   type="text"
+                                   class="form-control shadow-sm"
+                                   placeholder="Phone Number"
+                                   required
+                                   maxlength="11"
+                                   pattern="[0-9]{11}"
+                                   title="Phone number must be exactly 11 digits"
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,11);" />
+                        </div>
+
+                        <!-- Age -->
+                        <div class="mb-3">
+                            <label asp-for="Age" class="form-label">Age</label>
+                            <input asp-for="Age" type="number" min="1" class="form-control shadow-sm" placeholder="Enter Age" required />
+                        </div>
+
+                        <!-- Address -->
+                        <div class="mb-3">
+                            <label asp-for="Address" class="form-label">Address</label>
+                            <input asp-for="Address" class="form-control shadow-sm" placeholder="Enter Address" />
+                        </div>
+
+                        <!-- Blood Group -->
+                        <div class="mb-3">
+                            <label asp-for="BloodGroup" class="form-label">Blood Group</label>
+                            <select asp-for="BloodGroup" class="form-select shadow-sm" required>
+                                <option value="">-- Select --</option>
+                                <option>A+</option>
+                                <option>A-</option>
+                                <option>B+</option>
+                                <option>B-</option>
+                                <option>AB+</option>
+                                <option>AB-</option>
+                                <option>O+</option>
+                                <option>O-</option>
+                            </select>
+                        </div>
+
+                        <!-- User Type -->
+                        <div class="mb-3">
+                            <label asp-for="UsertypeId" class="form-label">User Type</label>
+                            <select asp-for="UsertypeId" class="form-select shadow-sm" asp-items="ViewBag.UserTypeList" required>
+                                <option value="">-- Select User Type --</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-gradient-primary w-100 py-2 mt-4 text-white fw-bold rounded-3">
+                            Register
+                        </button>
+
+                    </form>
+                </div>
+
+                <div class="card-footer text-center py-3 bg-light rounded-bottom-4">
+                    Already have an account? 
+                    <a asp-controller="Home" asp-action="Login" class="text-primary fw-bold">Login</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<style>
+    /* Gradient button */
+    .btn-gradient-primary {
+        background: linear-gradient(135deg, #4e73df, #1cc88a);
+        border: none;
+    }
+
+        .btn-gradient-primary:hover {
+            opacity: 0.9;
+        }
+
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #4e73df, #1cc88a) !important;
+    }
+</style>

@@ -1,0 +1,133 @@
+﻿@model SWMSU.Models.Dass21Form
+
+<div class="container mt-4">
+
+    <!-- Header -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+            <h3 class="fw-bold text-primary mb-1">DASS-21 Assessment Report</h3>
+            <p class="text-muted mb-0">Detailed Question-wise Responses</p>
+        </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card border-primary text-center h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Depression Score</h6>
+                    <h2 class="fw-bold text-danger">@Model.Depression</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-warning text-center h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Stress Score</h6>
+                    <h2 class="fw-bold text-warning">@Model.Stress</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-secondary text-center h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Assessment Date</h6>
+                    <h5 class="fw-bold">@Model.Date.ToString("dd MMM yyyy")</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Question Answers -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-light fw-bold">
+            Question-wise Responses
+        </div>
+
+        <div class="card-body">
+            <ol class="list-group list-group-numbered">
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>I found it hard to wind down?</span>
+                    <span class="badge bg-secondary">@Model.Q1</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>I couldn't seem to experience any positive feeling at all?</span>
+                    <span class="badge bg-secondary">@Model.Q2</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>I found it difficult to work up the initiative to do things?</span>
+                    <span class="badge bg-secondary">@Model.Q3</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>I tended to over-react to situations?</span>
+                    <span class="badge bg-secondary">@Model.Q4</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>I felt that I was using a lot of nervous energy?</span>
+                    <span class="badge bg-secondary">@Model.Q5</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>I felt that I had nothing to look forward to?</span>
+                    <span class="badge bg-secondary">@Model.Q6</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>I found myself getting agitated?</span>
+                    <span class="badge bg-secondary">@Model.Q7</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>I found it difficult to relax?</span>
+                    <span class="badge bg-secondary">@Model.Q8</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>I felt down-hearted and blue?</span>
+                    <span class="badge bg-secondary">@Model.Q9</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>I was intolerant of anything that kept me from getting on with what I was doing?</span>
+                    <span class="badge bg-secondary">@Model.Q10</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>I was unable to become enthusiastic about anything?</span>
+                    <span class="badge bg-secondary">@Model.Q11</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>I felt I wasn't worth much as a person?</span>
+                    <span class="badge bg-secondary">@Model.Q12</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>I felt that I was rather touchy?</span>
+                    <span class="badge bg-secondary">@Model.Q13</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>I felt that life was meaningless?</span>
+                    <span class="badge bg-secondary">@Model.Q14</span>
+                </li>
+
+            </ol>
+        </div>
+    </div>
+
+    @* <!-- Note -->
+    <div class="alert alert-info mt-4">
+        <strong>Note:</strong>
+        Scores are based on the DASS-21 scale (0–3). Higher scores indicate greater levels of distress.
+    </div> *@
+
+</div>
+

@@ -1,0 +1,130 @@
+﻿@* ViewProfile.cstml *@
+
+@model SWMSU.Models.StudentProfileVM
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="about-wrapper">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <!-- ===== LEFT : ABOUT ME ===== -->
+            <div class="col-md-4">
+                <h3 class="section-title">ABOUT ME</h3>
+                <p class="about-text">
+                    Hello, my name is <strong>@Model.UserName</strong>.
+                    I am currently studying in the
+                    <strong>@Model.Department</strong> department.
+                    This profile contains my academic and personal
+                    information for university records.
+                </p>
+            </div>
+
+            <!-- ===== CENTER : IMAGE ===== -->
+            <div class="col-md-4 text-center">
+                <div class="image-wrapper">
+
+                    @if (!string.IsNullOrEmpty(Model.Imageurl))
+                    {
+                        <img src="~/Images/Student/@Model.Imageurl"
+                             alt="Profile Image"
+                             class="profile-image img-thumbnail" />
+                    }
+                    else
+                    {
+                        <img src="~/Images/Student/default.png"
+                             alt="Default Profile Image"
+                             class="profile-image img-thumbnail" />
+                    }
+
+                </div>
+            </div>
+
+            <!-- ===== RIGHT : DETAILS ===== -->
+            <div class="col-md-4">
+                <h3 class="section-title">DETAILS</h3>
+
+                <p><strong>Name:</strong><br /> @Model.UserName</p>
+                <p><strong>Email:</strong><br /> @Model.Email</p>
+                <p><strong>Student ID:</strong><br /> @Model.StudentId</p>
+                <p><strong>Department:</strong><br /> @Model.Department</p>
+                <p><strong>Semester:</strong><br /> @Model.Semester</p>
+                <p><strong>CGPA:</strong><br /> @Model.CGPA</p>
+                <p><strong>Credits:</strong><br /> @Model.Credit</p>
+                <p><strong>Blood Group:</strong><br /> @Model.BloodGroup</p>
+                <p><strong>Address:</strong><br /> @Model.Address</p>
+            </div>
+            <div class="mt-4 d-flex gap-3">
+
+                <!-- EDIT BUTTON -->
+                <a asp-action="EditProfile"
+                   asp-controller="StudentProfile"
+                   asp-area="Students"
+                   asp-route-id="@Model.StudentProfileId"
+                   class="btn btn-outline-primary px-4">
+                    ✏️ Edit Profile
+                </a>
+
+                <!-- DELETE BUTTON -->
+                <form asp-action="Delete"
+                      asp-controller="StudentProfile"
+                      asp-area="Students"
+                      asp-route-id="@Model.StudentProfileId"
+                      method="post"
+                      onsubmit="return confirm('Are you sure you want to delete this profile?');">
+
+                    <button type="submit" class="btn btn-outline-danger px-4">
+                        🗑️ Delete Profile
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* ===== Layout ===== */
+    .about-wrapper {
+        padding: 80px 0;
+        background: #ffffff;
+    }
+
+    /* ===== Titles ===== */
+    .section-title {
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+    }
+
+    /* ===== About Text ===== */
+    .about-text {
+        font-size: 15px;
+        line-height: 1.8;
+        color: #444;
+    }
+
+    /* ===== Image ===== */
+    .image-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+
+    .profile-image {
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    /* ===== Details ===== */
+    p {
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+</style>

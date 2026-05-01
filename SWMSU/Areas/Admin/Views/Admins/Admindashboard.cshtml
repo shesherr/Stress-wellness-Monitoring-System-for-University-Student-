@@ -1,0 +1,176 @@
+﻿@{
+    ViewData["Title"] = "Student Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    ViewData["Title"] = "Department Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content mt-3">
+    <div class="container-fluid">
+
+        <!-- ===== Top Summary Cards ===== -->
+        <div class="row">
+
+            <div class="col-lg-3 col-6">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon bg-info">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Psychologists</span>
+                        <span class="info-box-number">8</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon bg-success">
+                        <i class="fas fa-user-graduate"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Students</span>
+                        <span class="info-box-number">350</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon bg-warning">
+                        <i class="fas fa-notes-medical"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Mental Records</span>
+                        <span class="info-box-number">120</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon bg-danger">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Monitoring</span>
+                        <span class="info-box-number">45</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== Middle Row ===== -->
+        <div class="row mt-3">
+
+            <!-- Recent Student Info -->
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="mb-0">Recent Student Information</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-sm table-hover mb-0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Rahim</td>
+                                    <td>CSE</td>
+                                    <td><span class="badge badge-warning">Monitoring</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Karima</td>
+                                    <td>BBA</td>
+                                    <td><span class="badge badge-success">Normal</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer text-right">
+                        <a asp-area="Admin"
+                           asp-controller="MentalissueResult"
+                           asp-action="ViewMentalissueList"
+                           class="btn btn-sm btn-outline-primary">
+                            View All
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monitoring Summary -->
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-secondary text-white">
+                        <h6 class="mb-0">Monitoring Summary</h6>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                High Risk
+                                <span class="float-right badge badge-danger">12</span>
+                            </li>
+                            <li class="list-group-item">
+                                Medium Risk
+                                <span class="float-right badge badge-warning">18</span>
+                            </li>
+                            <li class="list-group-item">
+                                Low Risk
+                                <span class="float-right badge badge-success">15</span>
+                            </li>
+                        </ul>
+
+                        <a asp-area="Admin"
+                           asp-controller="MentalissueResult"
+                           asp-action="GetFullListOfStudent"
+                           class="btn btn-sm btn-block btn-primary mt-3">
+                            Open Monitoring
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== Quick Action Row ===== -->
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+
+                        <a asp-area="Admin"
+                           asp-controller="PsychologistStudent"
+                           asp-action="PsychologistList"
+                           class="btn btn-outline-info btn-sm mr-2">
+                            Psychologist List
+                        </a>
+
+                        <a asp-area="Admin"
+                           asp-controller="PsychologistStudent"
+                           asp-action="StudentList"
+                           class="btn btn-outline-success btn-sm mr-2">
+                            Student List
+                        </a>
+
+                        <a asp-area="Admin"
+                           asp-controller="MentalissueResult"
+                           asp-action="ViewMentalissueList"
+                           class="btn btn-outline-warning btn-sm">
+                            Student Information
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

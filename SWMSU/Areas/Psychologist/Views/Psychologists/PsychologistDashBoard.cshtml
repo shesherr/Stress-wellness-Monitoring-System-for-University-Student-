@@ -1,0 +1,162 @@
+﻿@{
+    ViewData["Title"] = "Student Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content">
+    <div class="container-fluid">
+
+        <!-- ===== Embedded Stats Row ===== -->
+        <div class="row mb-3">
+
+            <div class="col-md-3">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon bg-info">
+                        <i class="fas fa-calendar-check"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Appointments</span>
+                        <span class="info-box-number">12</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon bg-success">
+                        <i class="fas fa-user-clock"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Today Sessions</span>
+                        <span class="info-box-number">5</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon bg-warning">
+                        <i class="fas fa-users"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Running Students</span>
+                        <span class="info-box-number">20</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon bg-danger">
+                        <i class="fas fa-bell"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Pending</span>
+                        <span class="info-box-number">3</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== Embedded Main Row ===== -->
+        <div class="row">
+
+            <!-- Embedded Appointment List -->
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="mb-0">Today’s Appointments</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-sm table-hover mb-0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Rahim</td>
+                                    <td>10:00 AM</td>
+                                    <td><span class="badge badge-success">Confirmed</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Karim</td>
+                                    <td>12:30 PM</td>
+                                    <td><span class="badge badge-warning">Pending</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer text-right">
+                        <a asp-controller="SendingRequest"
+                           asp-action="ViewRequest"
+                           class="btn btn-sm btn-outline-primary">
+                            View All
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Embedded Schedule -->
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-secondary text-white">
+                        <h6 class="mb-0">Today’s Schedule</h6>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">10:00 AM – Session</li>
+                            <li class="list-group-item">12:30 PM – Session</li>
+                            <li class="list-group-item">03:00 PM – Follow-up</li>
+                        </ul>
+                        <a asp-controller="PsychiatristSchedule"
+                           asp-action="Index"
+                           class="btn btn-sm btn-block btn-primary mt-3">
+                            Open Schedule
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== Embedded Quick Action Bar ===== -->
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+
+                        <a asp-controller="PsyProfile"
+                           asp-action="PsychologyProfile"
+                           class="btn btn-outline-primary btn-sm mr-2">
+                            Create Profile
+                        </a>
+
+                        <a asp-controller="SeeTheStudentList"
+                           asp-action="StudentList"
+                           class="btn btn-outline-success btn-sm mr-2">
+                            Student List
+                        </a>
+
+                        <a asp-controller="SendingRequest"
+                           asp-action="ViewRequest"
+                           class="btn btn-outline-warning btn-sm">
+                            Requests
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+

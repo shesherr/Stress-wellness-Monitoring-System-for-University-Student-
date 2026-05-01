@@ -1,0 +1,236 @@
+﻿@model List<SWMSU.Models.PrescriptionVM>
+
+@* Prescription.cshtml *@
+
+@{
+    ViewData["Title"] = "Prescription Form";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    #MedicineTable {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+        #MedicineTable th {
+            background: linear-gradient(90deg, #0d6efd);
+            color: #fff;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        #MedicineTable tbody tr:nth-child(odd) {
+            background-color: #e9f5ff;
+        }
+
+        #MedicineTable tbody tr:nth-child(even) {
+            background-color: #f0f0f0;
+        }
+
+        #MedicineTable tbody tr:hover {
+            background-color: #ffe0b2;
+        }
+
+        #MedicineTable td, #MedicineTable th {
+            text-align: center;
+            vertical-align: middle;
+            padding: 8px;
+            word-wrap: break-word;
+        }
+
+            #MedicineTable td:nth-child(8), #MedicineTable th:nth-child(8) {
+                width: 250px;
+                white-space: normal;
+            }
+</style>
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Prescription Form</h2>
+
+    <!-- Patient Details -->
+    <div class="card p-3 mb-4">
+        <h5 class="text-primary">Patient Details</h5>
+        @if (Model != null && Model.Count() > 0)
+        {
+            var patient = Model.First();
+            <div class="row">
+                <div class="col-md-4"><strong>Name:</strong> @patient.PatientName</div>
+
+                <div class="col-md-4"><strong>Address:</strong> @patient.Address</div>
+                <div class="col-md-4"><strong>Age:</strong> @patient.Age</div>
+            </div>
+        }
+        else
+        {
+            <div class="text-danger">⚠ No patient data found for this booking.</div>
+        }
+    </div>
+
+    <!-- Diagnose Entry -->
+    <div class="card p-3 mb-4">
+        <h5 class="text-info">Diagnosis</h5>
+        <div class="row g-3">
+            <div class="col-md-12">
+                <label for="Diagnose" class="form-label">Diagnose</label>
+                <input type="text" id="Diagnose" class="form-control" placeholder="Enter diagnosis here">
+            </div>
+        </div>
+    </div>
+
+    <!-- Medicine Entry -->
+    <div class="card p-3 mb-4">
+        <h5 class="text-success">Medicine Prescription</h5>
+        <div class="row g-3 align-items-end">
+            <div class="col-md-3">
+                <label for="MedicineName" class="form-label">Medicine</label>
+                <select id="MedicineName" class="form-select">
+                    <option value="">Select medicine</option>
+                    @if (ViewBag.Medicine != null)
+                    {
+                        foreach (var med in ViewBag.Medicine)
+                        {
+                            <option value="@med.id">@med.name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <input type="hidden" id="BookingId" value="@ViewBag.BookingId" />
+            <div class="col-md-2">
+                <label for="MedicineDose" class="form-label">Dose</label>
+                <input type="text" id="MedicineDose" class="form-control" placeholder="e.g., 2 tablets">
+            </div>
+            <div class="col-md-2">
+                <label for="MedicineDuration" class="form-label">Duration</label>
+                <input type="text" id="MedicineDuration" class="form-control" placeholder="e.g., 5 days">
+            </div>
+            <div class="col-md-2">
+                <label for="Frequency" class="form-label">Frequency</label>
+                <input type="text" id="Frequency" class="form-control" placeholder="e.g., twice daily">
+            </div>
+            <div class="col-md-3">
+                <label for="Advice" class="form-label">Advice</label>
+                <input type="text" id="Advice" class="form-control" placeholder="Any advice">
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <label for="Medicine_Notes" class="form-label">Medicine Notes</label>
+                <textarea id="Medicine_Notes" class="form-control" rows="5" placeholder="Enter detailed notes..."></textarea>
+            </div>
+        </div>
+
+        <div class="mt-3 d-flex justify-content-between">
+            <button class="btn btn-primary" onclick="addMedicine()">
+                <i class="fa fa-plus me-1"></i> Add
+            </button>
+            <button class="btn btn-warning" onclick="refreshPrescription()">
+                <i class="fa fa-refresh me-1"></i> Refresh
+            </button>
+        </div>
+    </div>
+
+    <!-- Added Medicines Table -->
+    <div class="card p-3 mb-4">
+        <h5 class="text-danger">Added Medicines</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="MedicineTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Medicine</th>
+                        <th>Dose</th>
+                        <th>Duration</th>
+                        <th>Frequency</th>
+                        <th>Advice</th>
+                        <th>Medical Note</th>
+                        <th hidden>MedicineId</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="text-center mb-5">
+        <button class="btn btn-success btn-lg" onclick="submitPrescription()">
+            <i class="fa fa-check me-1"></i> Submit Prescription
+        </button>
+    </div>
+</div>
+
+<script>
+    function addMedicine() {
+        const tableBody = document.getElementById("MedicineTable").getElementsByTagName('tbody')[0];
+        const bookingId = document.getElementById("BookingId").value;
+        const selectedMedicine = document.getElementById("MedicineName");
+        const medicineId = selectedMedicine.value;
+
+        if (!medicineId) { alert("Please select a medicine."); return; }
+
+        const row = tableBody.insertRow(-1);
+        row.dataset.bookingId = bookingId;
+
+        row.innerHTML = `
+            <td></td>
+            <td>${selectedMedicine.options[selectedMedicine.selectedIndex].text}</td>
+            <td>${document.getElementById("MedicineDose").value}</td>
+            <td>${document.getElementById("MedicineDuration").value}</td>
+            <td>${document.getElementById("Frequency").value}</td>
+            <td>${document.getElementById("Advice").value}</td>
+            <td>${document.getElementById("Medicine_Notes").value}</td>
+            <td hidden>${medicineId}</td>
+        `;
+
+        // Clear inputs except Diagnose
+        ["MedicineName","MedicineDose","MedicineDuration","Frequency","Advice","Medicine_Notes"].forEach(id => document.getElementById(id).value = '');
+    }
+
+    function refreshPrescription() {
+        document.getElementById("MedicineTable").getElementsByTagName('tbody')[0].innerHTML = '';
+        ["MedicineName","MedicineDose","MedicineDuration","Frequency","Advice","Medicine_Notes"].forEach(id => document.getElementById(id).value = '');
+        // Diagnose remains unchanged
+    }
+
+    function submitPrescription() {
+        const tableBody = document.getElementById("MedicineTable").getElementsByTagName('tbody')[0];
+        const rows = tableBody.getElementsByTagName('tr');
+
+        if (rows.length === 0) { alert("Please add at least one medicine."); return; }
+
+        const diagnose = document.getElementById("Diagnose").value;
+
+        const presDetails = Array.from(rows).map(row => ({
+            BookingId: row.dataset.bookingId,
+            MedicineId: row.cells[7].innerText,
+            MedicineName: row.cells[1].innerText,
+            MedicineDose: row.cells[2].innerText,
+            MedicineDuration: row.cells[3].innerText,
+            Frequency: row.cells[4].innerText,
+            Advice: row.cells[5].innerText,
+            Medicine_Notes: row.cells[6].innerText,
+            Diagnosed: diagnose
+        }));
+
+        $.ajax({
+            type: "POST",
+            url: "/Psychologist/SendingRequest/SavePrescription",
+            contentType: "application/json",
+            data: JSON.stringify(presDetails),
+            success: function(response){
+                alert(response.message);
+                refreshPrescription(); // clear table and inputs
+            },
+            error: function(){ alert("Error saving prescription!"); }
+        });
+    }
+
+    // Row numbering
+    const observer = new MutationObserver(() => {
+        const rows = document.querySelectorAll("#MedicineTable tbody tr");
+        rows.forEach((row, index) => row.cells[0].innerText = index + 1);
+    });
+    observer.observe(document.querySelector("#MedicineTable tbody"), { childList: true });
+</script>

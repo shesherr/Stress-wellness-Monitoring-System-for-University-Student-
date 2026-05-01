@@ -1,0 +1,385 @@
+﻿@* @model IEnumerable<SWMSU.Models.MentalissueListVM>
+
+<table class="table table-bordered table-striped" id="mentalTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Age</th>
+            <th>Address</th>
+            <th>Blood</th>
+            <th>Date</th>
+
+            <th>Q1</th>
+            <th>Q2</th>
+            <th>Q3</th>
+            <th>Q4</th>
+            <th>Q5</th>
+            <th>Q6</th>
+            <th>Q7</th>
+            <th>Q8</th>
+            <th>Q9</th>
+            <th>Q10</th>
+            <th>Q11</th>
+            <th>Q12</th>
+            <th>Q13</th>
+            <th>Q14</th>
+
+            <th>Depression</th>
+            <th>Stress</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.UserName</td>
+                <td>@item.Email</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Age</td>
+                <td>@item.Address</td>
+                <td>@item.BloodGroup</td>
+                <td>@item.Date.ToString("dd-MM-yyyy")</td>
+
+                <td>@item.Q1</td>
+                <td>@item.Q2</td>
+                <td>@item.Q3</td>
+                <td>@item.Q4</td>
+                <td>@item.Q5</td>
+                <td>@item.Q6</td>
+                <td>@item.Q7</td>
+                <td>@item.Q8</td>
+                <td>@item.Q9</td>
+                <td>@item.Q10</td>
+                <td>@item.Q11</td>
+                <td>@item.Q12</td>
+                <td>@item.Q13</td>
+                <td>@item.Q14</td>
+
+                <td>@item.Depression</td>
+                <td>@item.Stress</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#mentalTable').DataTable({
+                scrollX: true
+            });
+        });
+    </script>
+}
+@model IEnumerable<SWMSU.Models.MentalissueListVM>
+
+<!-- ===== EMBEDDED STYLES ===== -->
+<style>
+    #mentalTable_wrapper {
+        background: #ffffff;
+        padding: 16px;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    #mentalTable {
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+        #mentalTable thead th {
+            background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+            color: #fff;
+            text-align: center;
+            font-weight: 600;
+            vertical-align: middle;
+            border: none;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        #mentalTable tbody td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 8px 12px;
+        }
+
+            /* Left aligned important text columns */
+            #mentalTable tbody td:nth-child(1),
+            #mentalTable tbody td:nth-child(2),
+            #mentalTable tbody td:nth-child(5) {
+                text-align: left;
+                font-weight: 500;
+            }
+
+        /* Zebra rows */
+        #mentalTable tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        /* Hover highlight */
+        #mentalTable tbody tr:hover {
+            background-color: #eef4ff;
+            transition: 0.2s ease-in-out;
+        }
+
+        /* Depression column */
+        #mentalTable tbody td:nth-last-child(2) {
+            font-weight: 700;
+            color: #dc3545;
+        }
+
+        /* Stress column */
+        #mentalTable tbody td:last-child {
+            font-weight: 700;
+            color: #fd7e14;
+        }
+
+    /* Datatable inputs */
+    .dataTables_filter input,
+    .dataTables_length select {
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        padding: 5px 10px;
+    }
+
+    /* Pagination */
+    .page-item.active .page-link {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
+
+    /* Smooth scrollbar */
+    div.dataTables_scrollBody {
+        scrollbar-width: thin;
+    }
+</style>
+
+<!-- ===== TITLE ===== -->
+<div class="mb-3 text-center">
+    <h4 class="fw-bold text-primary">🧠 Mental Health Assessment Records</h4>
+    <small class="text-muted">DASS-21 Question-wise Evaluation</small>
+</div>
+
+<!-- ===== TABLE ===== -->
+<table class="table table-bordered table-striped" id="mentalTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Age</th>
+            <th>Address</th>
+            <th>Blood</th>
+            <th>Date</th>
+
+            <th>Q1</th>
+            <th>Q2</th>
+            <th>Q3</th>
+            <th>Q4</th>
+            <th>Q5</th>
+            <th>Q6</th>
+            <th>Q7</th>
+            <th>Q8</th>
+            <th>Q9</th>
+            <th>Q10</th>
+            <th>Q11</th>
+            <th>Q12</th>
+            <th>Q13</th>
+            <th>Q14</th>
+
+            <th>Depression</th>
+            <th>Stress</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.UserName</td>
+                <td>@item.Email</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Age</td>
+                <td>@item.Address</td>
+                <td>@item.BloodGroup</td>
+                <td>@item.Date.ToString("dd-MM-yyyy")</td>
+
+                <td>@item.Q1</td>
+                <td>@item.Q2</td>
+                <td>@item.Q3</td>
+                <td>@item.Q4</td>
+                <td>@item.Q5</td>
+                <td>@item.Q6</td>
+                <td>@item.Q7</td>
+                <td>@item.Q8</td>
+                <td>@item.Q9</td>
+                <td>@item.Q10</td>
+                <td>@item.Q11</td>
+                <td>@item.Q12</td>
+                <td>@item.Q13</td>
+                <td>@item.Q14</td>
+
+                <td>@item.Depression</td>
+                <td>@item.Stress</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#mentalTable').DataTable({
+                scrollX: true,
+                pageLength: 10
+            });
+        });
+    </script>
+} *@
+@model IEnumerable<SWMSU.Models.MentalissueListVM>
+
+<style>
+    .question-head {
+        cursor: pointer;
+        color: #007bff;
+        text-decoration: underline;
+        white-space: nowrap;
+    }
+
+        .question-head:hover {
+            color: #0056b3;
+        }
+</style>
+
+<table class="table table-bordered table-striped" id="mentalTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Age</th>
+            <th>Address</th>
+            <th>Blood</th>
+            <th>Date</th>
+
+            <!-- CLICKABLE Q HEADERS (with data-q) -->
+            <th class="question-head" data-q="1">Q1</th>
+            <th class="question-head" data-q="2">Q2</th>
+            <th class="question-head" data-q="3">Q3</th>
+            <th class="question-head" data-q="4">Q4</th>
+            <th class="question-head" data-q="5">Q5</th>
+            <th class="question-head" data-q="6">Q6</th>
+            <th class="question-head" data-q="7">Q7</th>
+            <th class="question-head" data-q="8">Q8</th>
+            <th class="question-head" data-q="9">Q9</th>
+            <th class="question-head" data-q="10">Q10</th>
+            <th class="question-head" data-q="11">Q11</th>
+            <th class="question-head" data-q="12">Q12</th>
+            <th class="question-head" data-q="13">Q13</th>
+            <th class="question-head" data-q="14">Q14</th>
+
+            <th>Depression</th>
+            <th>Stress</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.UserName</td>
+                <td>@item.Email</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Age</td>
+                <td>@item.Address</td>
+                <td>@item.BloodGroup</td>
+                <td>@item.Date.ToString("dd-MM-yyyy")</td>
+
+                <td>@item.Q1</td>
+                <td>@item.Q2</td>
+                <td>@item.Q3</td>
+                <td>@item.Q4</td>
+                <td>@item.Q5</td>
+                <td>@item.Q6</td>
+                <td>@item.Q7</td>
+                <td>@item.Q8</td>
+                <td>@item.Q9</td>
+                <td>@item.Q10</td>
+                <td>@item.Q11</td>
+                <td>@item.Q12</td>
+                <td>@item.Q13</td>
+                <td>@item.Q14</td>
+
+                <td>@item.Depression</td>
+                <td>@item.Stress</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- ===== QUESTION MODAL ===== -->
+<div class="modal fade" id="questionModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Question</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <p class="q-text" data-q="1"><b>Q1.</b> I found it hard to wind down?</p>
+                <p class="q-text" data-q="2"><b>Q2.</b> I couldn't seem to experience any positive feeling at all?</p>
+                <p class="q-text" data-q="3"><b>Q3.</b> I found it difficult to work up the initiative to do things?</p>
+                <p class="q-text" data-q="4"><b>Q4.</b> I tended to over-react to situations?</p>
+                <p class="q-text" data-q="5"><b>Q5.</b> I felt that I was using a lot of nervous energy?</p>
+                <p class="q-text" data-q="6"><b>Q6.</b> I felt that I had nothing to look forward to?</p>
+                <p class="q-text" data-q="7"><b>Q7.</b> I found myself getting agitated?</p>
+                <p class="q-text" data-q="8"><b>Q8.</b> I found it difficult to relax?</p>
+                <p class="q-text" data-q="9"><b>Q9.</b> I felt down-hearted and blue?</p>
+                <p class="q-text" data-q="10"><b>Q10.</b> I was intolerant of anything that kept me from getting on with what I was doing?</p>
+                <p class="q-text" data-q="11"><b>Q11.</b> I was unable to become enthusiastic about anything?</p>
+                <p class="q-text" data-q="12"><b>Q12.</b> I felt I wasn't worth much as a person?</p>
+                <p class="q-text" data-q="13"><b>Q13.</b> I felt that I was rather touchy?</p>
+                <p class="q-text" data-q="14"><b>Q14.</b> I felt that life was meaningless?</p>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            // DataTable
+            $('#mentalTable').DataTable({
+                scrollX: true
+            });
+
+            // Q header click
+            $('.question-head').on('click', function () {
+                var qNo = $(this).data('q');
+
+                // hide all questions
+                $('.q-text').hide();
+
+                // show selected question
+                $('.q-text[data-q="' + qNo + '"]').show();
+
+                // open modal
+                $('#questionModal').modal('show');
+            });
+
+        });
+    </script>
+}

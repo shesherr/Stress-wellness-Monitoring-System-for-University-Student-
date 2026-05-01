@@ -1,0 +1,279 @@
+﻿@model List<SWMSU.Models.PsychologyProfile>
+
+@{
+    ViewData["Title"] = "Psychologist List";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet" />
+
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">
+        @ViewBag.SeverityLevel Psychologists
+    </h2>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            @foreach (var p in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow h-100">
+
+                        <!-- Image -->
+                        @if (!string.IsNullOrEmpty(p.ImageUrl))
+                        {
+                            <img src="~/Images/Psychology/@p.ImageUrl"
+                                 class="card-img-top"
+                                 style="height:220px; object-fit:cover;" />
+                        }
+                        else
+                        {
+                            <img src="~/Images/Psychology/default.png"
+                                 class="card-img-top"
+                                 style="height:220px; object-fit:cover;" />
+                        }
+
+                        <div class="card-body text-center">
+                            <h5 class="fw-bold">Psychologist</h5>
+
+                            <p><strong>Specialization:</strong><br />@p.Specialization</p>
+                            <p><strong>Qualification:</strong><br />@p.Qualification</p>
+                            <p><strong>Experience:</strong> @p.ExperienceYears years</p>
+
+                            <span class="badge @(p.SeverityType == "Normal" ? "bg-success" :
+                                                                                   p.SeverityType == "Medium" ? "bg-warning" :
+                                                                                   "bg-danger")">
+                        @p.SeverityType
+                    </span>
+
+                            <hr />
+
+                            <p>📞 @p.PhoneNumber</p>
+                            <p>📧 @p.Email</p>
+                            <p><strong>Room:</strong> @p.Room</p>
+                            <div class="card-footer text-center">
+                                <a asp-area="Students"
+                                   asp-controller="Request"
+                                   asp-action="Book" asp-route-PsychiatristId="@p.UserId" class="btn btn-primary">Book Appointment</a>
+                            </div>
+                            @* <!-- MODAL BUTTON (UserId based) -->
+                            <button class="btn btn-primary w-100"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#requestModal-@p.UserId">
+                                📨 Request for Counselling
+                            </button> *@
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODAL (UserId based) -->
+                <div class="modal fade"
+                     id="requestModal-@p.UserId"
+                     tabindex="-1"
+                     aria-hidden="true">
+
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <form method="post"
+                                  asp-action="RequestCounselling"
+                                  asp-controller="Request"
+                                  asp-area="Students">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Counselling Request</h5>
+                                    <button type="button"
+                                            class="btn-close"
+                                            data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <div class="modal-body">
+
+                                    <!-- Psychologist USER ID -->
+                                    <input type="hidden"
+                                           name="UserId"
+                                           value="@p.UserId" />
+
+                                    <label class="form-label">Your Message</label>
+                                    <textarea name="Message"
+                                      class="form-control"
+                                      rows="4"
+                                      required></textarea>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="submit"
+                                            class="btn btn-success">
+                                        Send Request
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-secondary"
+                                            data-bs-dismiss="modal">
+                                        Cancel
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">
+            No psychologist found for this severity level.
+        </div>
+    }
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+
+
+
+
+
+@* @model List<SWMSU.Models.PsychologyProfile>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Psychologist List</title>
+
+    <!-- ✅ Bootstrap CSS (DIRECT LINK) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" />
+</head>
+<body>
+
+    <div class="container mt-5">
+
+        <h2 class="text-center mb-4">
+            @ViewBag.Severity Level Psychologists
+        </h2>
+
+        @if (Model != null && Model.Any())
+        {
+            <div class="row">
+                @foreach (var p in Model)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow h-100">
+
+                            <!-- Image -->
+                            @if (!string.IsNullOrEmpty(p.ImageUrl))
+                            {
+                                <img src="~/Images/Psychology/@p.ImageUrl"
+                                     class="card-img-top"
+                                     style="height:220px; object-fit:cover;" />
+                            }
+                            else
+                            {
+                                <img src="~/Images/Psychology/default.png"
+                                     class="card-img-top"
+                                     style="height:220px; object-fit:cover;" />
+                            }
+
+                        <div class="card-body text-center">
+                            <h5 class="fw-bold">Psychologist</h5>
+
+                            <p><strong>Specialization:</strong><br />@p.Specialization</p>
+                            <p><strong>Qualification:</strong><br />@p.Qualification</p>
+                            <p><strong>Experience:</strong> @p.ExperienceYears years</p>
+
+                            <span class="badge
+                                    @(p.SeverityType == "Normal" ? "bg-success" :
+                                                                    p.SeverityType == "Medium" ? "bg-warning" : "bg-danger")">
+                            @p.SeverityType
+                        </span>
+
+                                <hr />
+
+                                <p>📞 @p.PhoneNumber</p>
+                                <p>📧 @p.Email</p>
+                                <p><strong>Room:</strong> @p.Room</p>
+
+                                <!-- 🔥 MODAL BUTTON -->
+                                <button class="btn btn-primary w-100"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#requestModal-@p.PsychologistId">
+                                    📨 Request for Counselling
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 🔥 MODAL -->
+                    <div class="modal fade"
+                         id="requestModal-@p.PsychologistId"
+                         tabindex="-1">
+
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <form method="post"
+                                      asp-action="RequestCounselling"
+                                      asp-controller="Student"
+                                      asp-area="Students">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Counselling Request</h5>
+                                        <button type="button"
+                                                class="btn-close"
+                                                data-bs-dismiss="modal"></button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <input type="hidden"
+                                               name="PsychologistId"
+                                               value="@p.PsychologistId" />
+
+                                        <label class="form-label">Your Message</label>
+                                        <textarea name="Message"
+                                          class="form-control"
+                                          rows="4"
+                                          required></textarea>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-success">
+                                            Send Request
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-secondary"
+                                                data-bs-dismiss="modal">
+                                            Cancel
+                                        </button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                        }
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning text-center">
+                No psychologist found for this severity level.
+            </div>
+        }
+
+    </div>
+
+    <!-- ✅ Bootstrap JS (DIRECT LINK – MUST BE BUNDLE) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html> *@

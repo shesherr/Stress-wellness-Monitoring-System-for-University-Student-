@@ -1,0 +1,267 @@
+﻿
+@model List<SWMSU.Models.Dass21FormResultVM>
+
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Check Your Daily Mood";
+}
+
+<div class="container mt-5">
+
+    <!-- ===== Headline ===== -->
+    <div class="headline-wrapper mb-5">
+        <h2 class="headline-text">Check Your Daily Mood</h2>
+        <p class="headline-sub">Daily Mental Health Status Overview</p>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        int counter = 1;
+
+        foreach (var item in Model)
+
+
+        {
+
+            /* ================= DEPRESSION LOGIC ================= */
+            string depressionLevel = "Unknown";
+            string depressionMessage = "";
+            string depressionBadgeClass = "bg-secondary";
+
+            if (item.Depression >= 0 && item.Depression <= 9)
+            {
+                depressionLevel = "Normal";
+                depressionMessage = "Keep up the good mental health. Contact your course teachers if needed.";
+                depressionBadgeClass = "bg-success";
+            }
+            else if (item.Depression >= 10 && item.Depression <= 13)
+            {
+                depressionLevel = "Mild";
+                depressionMessage = "Monitor your mood and consult your course teachers if required.";
+                depressionBadgeClass = "bg-info text-dark";
+            }
+            else if (item.Depression >= 14 && item.Depression <= 20)
+            {
+                depressionLevel = "Moderate";
+                depressionMessage = "Pay attention to your mental health. Contact your course teachers.";
+                depressionBadgeClass = "bg-warning text-dark";
+            }
+            else if (item.Depression >= 21 && item.Depression <= 27)
+            {
+                depressionLevel = "Severe";
+                depressionMessage = "Consider seeking professional help. Contact your university psychologist.";
+                depressionBadgeClass = "bg-danger";
+            }
+            else if (item.Depression >= 28)
+            {
+                depressionLevel = "Extremely Severe";
+                depressionMessage = "Immediate attention needed! Contact your university psychologist.";
+                depressionBadgeClass = "bg-danger text-white";
+            }
+
+            /* ================= STRESS LOGIC ================= */
+            string stressLevel = "Unknown";
+            string stressMessage = "";
+            string stressBadgeClass = "bg-secondary";
+
+            if (item.Stress >= 0 && item.Stress <= 14)
+            {
+                stressLevel = "Normal";
+                stressMessage = "Keep up the good mental health. Contact your course teachers if needed.";
+                stressBadgeClass = "bg-success";
+            }
+            else if (item.Stress >= 15 && item.Stress <= 18)
+            {
+                stressLevel = "Mild";
+                stressMessage = "Monitor your stress and consult your course teachers if required.";
+                stressBadgeClass = "bg-info text-dark";
+            }
+            else if (item.Stress >= 19 && item.Stress <= 25)
+            {
+                stressLevel = "Moderate";
+                stressMessage = "Pay attention to your stress levels. Contact your course teachers.";
+                stressBadgeClass = "bg-warning text-dark";
+            }
+            else if (item.Stress >= 26 && item.Stress <= 33)
+            {
+                stressLevel = "Severe";
+                stressMessage = "Consider seeking professional help. Contact your university psychologist.";
+                stressBadgeClass = "bg-danger";
+            }
+            else if (item.Stress >= 34)
+            {
+                stressLevel = "Extremely Severe";
+                stressMessage = "Immediate attention needed! Contact your university psychologist.";
+                stressBadgeClass = "bg-danger text-white";
+            }
+
+            <div class="prescription mb-5">
+
+                <!-- Header -->
+                <div class="prescription-header">
+                    <div>
+                        <h5 class="fw-bold mb-0">
+                            International University Business And Agriculture Technology
+                        </h5>
+                        <small>Submission #@counter</small>
+                    </div>
+                    <div class="icon">🧠</div>
+                </div>
+
+                <!-- Student Information -->
+                <div class="student-info mt-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Name:</strong> @item.UserName</p>
+                            <p><strong>Email:</strong> @item.Email</p>
+                            <p><strong>Department:</strong> @item.Department</p>
+                            <p><strong>Semester:</strong> @item.Semester</p>
+                            <p><strong>Age:</strong> @item.Age</p>
+                            <p><strong>StressScore:</strong> @item.Stress</p>
+                            <p><strong>DepressionScore:</strong> @item.Depression</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Address:</strong> @item.Address</p>
+                            <p><strong>Form Fill-up Time:</strong> @item.FormCreateTime</p>
+                        </div>
+                        <div class="text-center mt-2">
+                            <a asp-area="Students"
+                               asp-controller="Student"
+                               asp-action="Dass21AnswerDetails"
+                               asp-route-formId="@item.FormId"
+                               class="btn btn-sm btn-outline-primary">
+                                📋See Questions
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <!-- Depression + Stress Result -->
+                <div class="row g-3 text-center">
+                    <div class="col-md-6">
+                        <div class="score-card">
+                            <h6>
+                                Depression
+                                <span class="badge @depressionBadgeClass ms-2">
+                                    @depressionLevel
+                                </span>
+                            </h6>
+                            <p class="mt-2 text-muted">@depressionMessage</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="score-card stress">
+                            <h6>
+                                Stress
+                                <span class="badge @stressBadgeClass ms-2">
+                                    @stressLevel
+                                </span>
+                            </h6>
+                            <p class="mt-2 text-muted">@stressMessage</p>
+                        </div>
+                    </div>
+                </div>
+
+                @{
+                    string visitText = "";
+                    string visitBtnClass = "btn-primary";
+
+                    if (stressLevel == "Normal")
+                    {
+                        visitText = "Want to visit Normal Psychologist";
+                        visitBtnClass = "btn-success";
+                    }
+                    else if (stressLevel == "Mild" || stressLevel == "Moderate")
+                    {
+                        visitText = "Want to visit Medium Psychologist";
+                        visitBtnClass = "btn-warning";
+                    }
+                    else
+                    {
+                        visitText = "Want to visit Severe Psychologist";
+                        visitBtnClass = "btn-danger";
+                    }
+                }
+
+                <!-- Visit Psychologist Button -->
+                <div class="text-center mt-4">
+                    <a asp-action="GetPsychologistBySevere"
+                       asp-controller="Student"
+                       asp-area="Students"
+                       asp-route-severity="@item.SeverityType"
+                       class="btn @(item.SeverityType=="Normal"?"btn-success":
+                                                                             item.SeverityType == "Medium" ? "btn-warning" : "btn-danger")">
+                🧑‍⚕️ Visit @item.SeverityType Psychologist
+            </a>
+                </div>
+
+                <div class="note mt-3">
+                    <strong>Note:</strong>
+                    If your stress or depression level is high, please contact your course teacher or university psychologist.
+                </div>
+            
+            </div>
+
+            counter++;
+           
+        }
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">
+            কোনো রেকর্ড পাওয়া যায়নি।
+        </div>
+    }
+</div>
+
+<style>
+.headline-wrapper { text-align: center; }
+.headline-text {
+    font-size: 40px;
+    font-weight: 800;
+    background: linear-gradient(90deg,#4e54c8,#8f94fb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.headline-sub { color:#6c757d; }
+
+.prescription {
+    border: 2px solid #4e54c8;
+    border-radius: 12px;
+    padding: 20px;
+    background: #fff;
+}
+
+.prescription-header {
+    background: linear-gradient(90deg,#4e54c8,#8f94fb);
+    color:#fff;
+    padding:15px;
+    border-radius:8px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.icon { font-size:36px; }
+
+.student-info p { margin-bottom:6px; font-size:15px; }
+
+.score-card {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.score-card.stress { border-color:#ffc107; }
+
+.note {
+    background:#f8f9fa;
+    padding:12px;
+    border-left:5px solid #4e54c8;
+    font-size:14px;
+}
+</style>

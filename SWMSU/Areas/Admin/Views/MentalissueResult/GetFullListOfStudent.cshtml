@@ -1,0 +1,209 @@
+﻿@model List<SWMSU.Models.AdminGetAllStudent>
+
+@{
+    ViewData["Title"] = "Admin - All Student Bookings";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container-fluid mt-4">
+
+    <div class="text-center mb-4">
+        <h3 class="fw-bold text-primary">Mental Health Booking Dashboard</h3>
+        <p class="text-muted">All Student & Psychologist Appointments</p>
+        <hr />
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body table-responsive">
+
+            <table id="patienttable" class="table table-bordered table-striped">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>#</th>
+                        <th>Student</th>
+                        <th>Department</th>
+                        <th>StressLevel</th>
+                        <th>Psychologist</th>
+                        <th>Specialization</th>
+                        <th>Appointment</th>
+                        <th>Status</th>
+                        <th>Room</th>
+                        <th>Created</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        int i = 1;
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center fw-bold">@i</td>
+
+                                <!-- Student -->
+                                <td>
+                                    <div class="fw-bold">@item.StudentName</div>
+                                    <small class="text-muted">
+                                        @item.StudentEmail <br />
+                                        @item.StudentPhone
+                                    </small>
+                                </td>
+
+                                <td>
+                                    <b>@item.Department</b><br />
+                                    <small>Sem: @item.Semester | CGPA: @item.CGPA</small>
+                                </td>
+                                <td>
+                                    <b>@item.SeverityType</b><br />
+
+                                </td>
+                                <!-- Psychologist -->
+                                <td>
+                                    <div class="fw-bold">@item.PsychologistName</div>
+                                    <small class="text-muted">
+                                        @item.PsychologistEmail <br />
+                                        @item.PsychologistPhone
+                                    </small>
+                                </td>
+
+                                <td>
+                                    @item.Specialization <br />
+                                    <small>@item.ExperienceYears years</small>
+                                </td>
+
+                                <!-- Appointment -->
+                                <td>
+                                    📅 @item.AppointmentDate.ToString("dd MMM yyyy") <br />
+                                    🕒 @item.AppointmentTime <br />
+                                    <small>@item.AppointmentDay</small>
+                                </td>
+
+                                <!-- Status -->
+                                <td class="text-center">
+                                    @if (item.ApprovalStatus == "Approved")
+                                    {
+                                        <span class="badge bg-success">Approved</span>
+                                    }
+                                    else if (item.ApprovalStatus == "Pending")
+                                    {
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">@item.ApprovalStatus</span>
+                                    }
+                                </td>
+
+                                <td class="text-center">
+                                    <span class="badge bg-info">@item.Room</span>
+                                </td>
+
+                                <td>
+                                    @item.CreatedAt.ToString("dd MMM yyyy")
+                                </td>
+                                <td>
+                                    <a asp-controller="MentalissueResult"
+                                       asp-action="StudentMentalHistoryById"
+                                       asp-route-userId="@item.StudentUserId"
+                                       class="btn btn-sm btn-primary">
+                                        View Mental History
+                                    </a>
+                                    @if (item.ApprovalStatus == "Absent")
+                                    {
+                                        <form asp-controller="MentalissueResult"
+                                              asp-action="SendAbsentMessage"
+                                              method="post"
+                                              style="display:inline;">
+
+                                            <input type="hidden" name="BookingId" value="@item.BookingId" />
+
+                                            <button type="submit" class="btn btn-sm btn-danger mt-1">
+                                                📧 Send Absent Mail
+                                            </button>
+                                        </form>
+                                    }
+                                </td>
+                              
+
+                            </tr>
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="9" class="text-center text-danger">
+                                No bookings found
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+    <div class="text-end mb-3">
+        <button class="btn btn-danger" onclick="downloadPDF()">
+            📄 Download PDF
+        </button>
+    </div>
+</div>
+@* @section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#patienttable').DataTable();
+        });
+    </script>
+} *@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#patienttable').DataTable();
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#patienttable').DataTable();
+        });
+
+        async function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+
+            let table = document.getElementById("patienttable");
+
+            await html2canvas(table, {
+                scale: 2
+            }).then(canvas => {
+
+                let imgData = canvas.toDataURL("image/png");
+                let pdf = new jsPDF('l', 'mm', 'a4'); // landscape for wide table
+
+                let pageWidth = pdf.internal.pageSize.getWidth();
+                let pageHeight = pdf.internal.pageSize.getHeight();
+
+                let imgWidth = pageWidth - 20;
+                let imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+                let position = 10;
+
+                if (imgHeight > pageHeight) {
+                    imgHeight = pageHeight - 20;
+                }
+
+                pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+                pdf.save("Mental_Health_Booking_Report.pdf");
+            });
+        }
+    </script>
+}
+
+}

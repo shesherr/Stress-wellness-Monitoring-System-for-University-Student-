@@ -1,0 +1,153 @@
+﻿@model List<SWMSU.Models.CounsellingRequest>
+
+@{
+    ViewData["Title"] = "Counselling Request Report";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet" />
+
+<div class="container mt-4">
+
+    <!-- ===== Report Header ===== -->
+    <div class="text-center mb-4">
+        <h3 class="fw-bold">Counselling Request Report</h3>
+        <p class="text-muted">Complete counselling request information</p>
+        <hr />
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        @foreach (var item in Model)
+        {
+            <div class="card shadow mb-4">
+                <div class="card-body">
+
+                    <!-- ===== Request Info ===== -->
+                    
+
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong>Status:</strong><br />
+                            <span class="badge @(item.ApprovalStatus == "Pending" ? "bg-warning" :
+                                                                                                                     item.ApprovalStatus == "Approved" ? "bg-success" :
+                                                                                   "bg-danger")">
+                        @item.ApprovalStatus
+                    </span>
+                </div>
+
+                        <div class="col-md-4">
+                            <strong>Create Date:</strong><br />
+                            @item.CreatedAt.ToString("dd MMM yyyy, hh:mm tt")
+                        </div>
+
+                        <div class="col-md-4">
+                            <strong>Message:</strong><br />
+                            @item.Message
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <!-- ===== Student Information ===== -->
+                    <h6 class="fw-bold text-success">Student Information</h6>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong>Name:</strong> @item.StudentName
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Email:</strong> @item.StudentEmail
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Phone:</strong> @item.StudentPhone
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <strong>Student ID:</strong> @item.StudentId
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Department:</strong> @item.Department
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Semester:</strong> @item.Semester
+                        </div>
+                        <div class="col-md-3">
+                            <strong>CGPA:</strong> @item.CGPA
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <strong>Completed Credit:</strong> @item.Credit
+                    </div>
+
+                    <hr />
+
+                    <!-- ===== Psychologist Information ===== -->
+                    <h6 class="fw-bold text-danger">Psychologist Information</h6>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong>Name:</strong> @item.PsychologistName
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Email:</strong> @item.PsychologistEmail
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Phone:</strong> @item.PsychologistPhone
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong>Qualification:</strong> @item.Qualification
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Specialization:</strong> @item.Specialization
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Experience:</strong> @item.ExperienceYears Years
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-4">
+                            <strong>Severity Type:</strong>
+                            <span class="badge @(item.SeverityType == "Normal" ? "bg-success" :
+                                                                           item.SeverityType == "Medium" ? "bg-warning" :
+                                                                           "bg-danger")">
+                        @item.SeverityType
+                    </span>
+                </div>
+                <div class="col-md-4">
+                    <strong>Room:</strong> @item.Room
+                </div>
+            </div>
+
+                    <div class="mt-2">
+                        <strong>Bio:</strong>
+                        <p class="text-muted">@item.Bio</p>
+                    </div>
+
+                </div>
+            </div>
+        }
+
+        <!-- ===== Print Button ===== -->
+        <div class="text-end mt-3">
+            <button class="btn btn-outline-primary" onclick="window.print()">
+                🖨 Print Report
+            </button>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">
+            No counselling request data found.
+        </div>
+    }
+
+</div>

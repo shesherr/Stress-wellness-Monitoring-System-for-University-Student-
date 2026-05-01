@@ -1,0 +1,68 @@
+﻿@model SWMSU.Models.Student
+
+@{
+    ViewData["Title"] = "Student Login";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 col-sm-8">
+
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header text-center bg-gradient-primary text-white rounded-top-4 py-4">
+                    <h3 class="mb-0">Student Login</h3>
+                </div>
+
+                <div class="card-body p-5">
+
+                    @if (TempData["error"] != null)
+                    {
+                        <div class="alert alert-danger text-center">
+                            @TempData["error"]
+                        </div>
+                    }
+
+                    <form asp-action="StuLogin" method="post" class="needs-validation" novalidate>
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label asp-for="StudentEmail" class="form-label">Email</label>
+                            <input asp-for="StudentEmail" type="email" class="form-control shadow-sm" placeholder="Enter your email" required />
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label asp-for="StudentPassword" class="form-label">Password</label>
+                            <input asp-for="StudentPassword" type="password" class="form-control shadow-sm" placeholder="Enter your password" required />
+                        </div>
+
+                        <button type="submit" class="btn btn-gradient-primary w-100 py-2 mt-3 text-white fw-bold rounded-3">
+                            Login
+                        </button>
+                    </form>
+                </div>
+
+                <div class="card-footer text-center py-3 bg-light rounded-bottom-4">
+                    <span class="me-2">Don't have an account?</span>
+                    <a asp-action="StuRegistration" class="btn btn-sm btn-outline-primary fw-bold">Register Here</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Gradient button */
+    .btn-gradient-primary {
+        background: linear-gradient(135deg, #4e73df, #1cc88a);
+        border: none;
+    }
+
+        .btn-gradient-primary:hover {
+            opacity: 0.9;
+        }
+
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #4e73df, #1cc88a) !important;
+    }
+</style>

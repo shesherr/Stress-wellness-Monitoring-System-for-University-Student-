@@ -1,0 +1,72 @@
+﻿@* ~/Areas/Department/Views/Shared/_DepartmentSideBar.cshtml *@
+<aside class="main-sidebar sidebar-dark-info elevation-4">
+    <!-- Brand Logo -->
+    <a href="/Department/Dashboard/Index" class="brand-link text-center">
+        <span class="brand-text font-weight-bold">Admin Panel</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column"
+                data-widget="treeview" role="menu" data-accordion="false">
+
+                
+
+
+                <!-- Psychologist -->
+                <li class="nav-item">
+                    <a asp-area="Admin"
+                       asp-controller="PsychologistStudent"
+                       asp-action="PsychologistList"
+                       class="nav-link">
+                        <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                        <p>Psychologist</p>
+                    </a>
+                </li>
+
+
+                <!-- Students -->
+                <li class="nav-item">
+                    <a asp-area="Admin"
+                       asp-controller="PsychologistStudent"
+                       asp-action="StudentList"
+                       class="nav-link">
+                        <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                        <p>Students</p>
+                    </a>
+                </li>
+
+             
+
+             
+
+
+
+                <!-- Reports -->
+                <li class="nav-item">
+                    <a asp-area="Admin"
+                       asp-controller="MentalissueResult"
+                       asp-action="ViewMentalissueList"
+                       class="nav-link">
+                        <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                        <p>Student MentalStage Information</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-area="Admin"
+                       asp-controller="MentalissueResult"
+                       asp-action="GetFullListOfStudent"
+                       class="nav-link">
+                        <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                        <p> Student Monitoring</p>
+                    </a>
+                </li>
+
+              
+
+
+            </ul>
+        </nav>
+    </div>
+</aside>

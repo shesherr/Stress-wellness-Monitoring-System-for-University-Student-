@@ -1,0 +1,144 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<style>
+    /* ===== RESET ===== */
+    /* ===== HERO SECTION ===== */
+    .hero-section {
+        position: relative;
+        height: calc(100vh - 56px);
+        width: 100%;
+        background-image: url('/images/backgroundpic.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 8%;
+        color: #fff;
+    }
+
+    /* overlay */
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(rgba(15, 76, 117, 0.75), rgba(15, 76, 117, 0.75));
+        z-index: 0;
+    }
+
+
+
+    /* LEFT SIDE (TEXT) */
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        width: 50%;
+        max-width: 600px;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .hero-sub {
+        font-size: 1.2rem;
+        line-height: 1.7;
+        opacity: 0.95;
+    }
+
+    /* RIGHT SIDE (WHITE CARD) */
+    .hero-card {
+        position: relative;
+        z-index: 2;
+        width: 50%;
+        max-width: 450px;
+        background: #ffffff;
+        color: #333;
+        padding: 45px 40px;
+        border-radius: 18px;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+    }
+
+        .hero-card h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0f4c75;
+            margin-bottom: 18px;
+        }
+
+        .hero-card p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .hero-card ul {
+            padding-left: 18px;
+        }
+
+            .hero-card ul li {
+                margin-bottom: 10px;
+                font-size: 0.95rem;
+            }
+
+    /* ===== RESPONSIVE ===== */
+ (max-width: 992px) {
+        .hero-section
+
+    {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .hero-content,
+    .hero-card {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .hero-card {
+        margin-top: 40px;
+    }
+
+    }
+</style>
+<!-- ===== HERO FULL SCREEN ===== -->
+<div class="hero-section">
+    <div class="hero-overlay"></div>
+
+    <!-- LEFT -->
+    <div class="hero-content">
+        <h1 class="hero-title">
+            Stress & Wellness Monitoring System<br />
+            For University Students
+        </h1>
+
+        <p class="hero-sub">
+            Supporting university students by monitoring stress and promoting wellness.
+        </p>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="hero-card">
+       
+
+        <p>
+            This platform helps university students monitor stress levels,
+            track mental health, and connect with professional psychological
+            support in a secure environment.
+        </p>
+
+        <ul>
+            <li>✔ Stress assessment & tracking</li>
+            <li>✔ Wellness monitoring</li>
+            <li>✔ Psychologist support</li>
+           
+        </ul>
+    </div>
+</div>

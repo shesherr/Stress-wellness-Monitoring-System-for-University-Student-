@@ -1,0 +1,161 @@
+﻿@* //StudentDashboard *@
+@{
+    ViewData["Title"] = "Student Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>Welcome to Student Dashboard Test</h1>
+<p>This page shows the sidebar always, no user type checked.</p>
+
+
+<section class="content mt-3">
+    <div class="container-fluid">
+
+        <!-- ===== Welcome Card ===== -->
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4 class="mb-1">Welcome 👋</h4>
+                        <p class="text-muted mb-0">
+                            Manage your profile, mental health forms, and reports from here.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== Top Info Cards ===== -->
+        <div class="row">
+
+            <div class="col-lg-3 col-6">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon bg-info">
+                        <i class="fas fa-user"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Profile</span>
+                        <span class="info-box-number">Completed</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon bg-warning">
+                        <i class="fas fa-file-alt"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Forms Submitted</span>
+                        <span class="info-box-number">1</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon bg-success">
+                        <i class="fas fa-chart-bar"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">DASS-21 Result</span>
+                        <span class="info-box-number">Available</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="info-box shadow-sm">
+                    <span class="info-box-icon bg-danger">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Requests</span>
+                        <span class="info-box-number">2</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== Middle Content ===== -->
+        <div class="row mt-3">
+
+            <!-- Activity -->
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="mb-0">Recent Activity</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-sm table-hover mb-0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Activity</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Profile Created</td>
+                                    <td>20 Jan 2026</td>
+                                    <td><span class="badge badge-success">Done</span></td>
+                                </tr>
+                                <tr>
+                                    <td>DASS-21 Form Submitted</td>
+                                    <td>21 Jan 2026</td>
+                                    <td><span class="badge badge-success">Completed</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Request Sent</td>
+                                    <td>22 Jan 2026</td>
+                                    <td><span class="badge badge-warning">Pending</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-secondary text-white">
+                        <h6 class="mb-0">Quick Actions</h6>
+                    </div>
+                    <div class="card-body">
+
+                        <a asp-area="Students"
+                           asp-controller="StudentProfile"
+                           asp-action="StuProfile"
+                           class="btn btn-outline-primary btn-block btn-sm mb-2">
+                            Create / Update Profile
+                        </a>
+
+                        <a asp-controller="Student"
+                           asp-action="Form"
+                           class="btn btn-outline-warning btn-block btn-sm mb-2">
+                            Fill Mental Health Form
+                        </a>
+
+                        <a asp-controller="Student"
+                           asp-action="Dass21Result"
+                           class="btn btn-outline-success btn-block btn-sm mb-2">
+                            View Result
+                        </a>
+
+                        <a asp-controller="Request"
+                           asp-action="Index"
+                           class="btn btn-outline-danger btn-block btn-sm">
+                            View Requests
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+

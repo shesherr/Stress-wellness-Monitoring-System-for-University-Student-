@@ -1,0 +1,84 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var username = HttpContextAccessor.HttpContext.Session.GetString("UserName") ?? "User";
+}
+
+<aside class="main-sidebar elevation-4 sidebar-light-custom" style="background:#f8f9fa; min-height:100vh;">
+
+    <!-- User Info -->
+    <div class="text-center py-3" style="border-bottom:1px solid #ddd;">
+        <i class="fas fa-user-circle" style="font-size:45px; color:#555;"></i>
+        <h5 class="mt-2 mb-0" style="color:#333; font-weight:600;">@username</h5>
+        <small style="color:#666;">Logged In</small>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar">
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column">
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="Students" asp-controller="StudentProfile" asp-action="StuProfile">
+                        <i class="nav-icon fas fa-user text-dark"></i>
+                        <p>Create Profile</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="Students" asp-controller="StudentProfile" asp-action="ViewProfile">
+                        <i class="nav-icon fas fa-user text-dark"></i>
+                        <p>See Profile</p>
+                    </a>
+                </li>
+              
+
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-controller="Student" asp-action="Form">
+                        <i class="nav-icon fas fa-file-alt text-dark"></i>
+                        <p>Student Form</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-controller="Student" asp-action="Dass21Result">
+                        <i class="nav-icon fas fa-chart-bar text-dark"></i>
+                        <p>View Form Result</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-controller="Request" asp-action="Index">
+                        <i class="nav-icon fas fa-chart-bar text-dark"></i>
+                        <p>View Request Report</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-controller="Prescription" asp-action="PrescriptionList">
+                        <i class="nav-icon fas fa-chart-bar text-dark"></i>
+                        <p>Prescriptions</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>
+
+<style>
+    .nav-sidebar > .nav-item > .nav-link {
+        border-radius: 6px;
+        margin: 5px 10px;
+        padding: 10px 12px;
+        transition: 0.3s;
+        font-weight: 500;
+    }
+
+        .nav-sidebar > .nav-item > .nav-link:hover {
+            background: #e4e4e4 !important;
+            transform: translateX(4px);
+        }
+
+    .sidebar-light-custom {
+        color: #333 !important;
+    }
+</style>

@@ -1,0 +1,373 @@
+﻿@* @model List<SWMSU.Models.CounsellingRequest>
+
+@{
+    ViewData["Title"] = "Counselling Request Report";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet" />
+
+<div class="container mt-4">
+
+    <!-- ===== Report Header ===== -->
+    <div class="text-center mb-4">
+        <h3 class="fw-bold">Counselling Request Report</h3>
+        <p class="text-muted">Complete counselling request information</p>
+        <hr />
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        @foreach (var item in Model)
+        {
+            <div class="card shadow mb-4">
+                <div class="card-body">
+
+                    <!-- ===== Request Info ===== -->
+                 
+
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong>Status:</strong><br />
+                            <span class="badge @(item.ApprovalStatus == "Pending" ? "bg-warning" :
+                                                                                                                                                       item.ApprovalStatus == "Approved" ? "bg-success" :
+                                                                                                                     "bg-danger")">
+                        @item.ApprovalStatus
+                    </span>
+                </div>
+
+                        <div class="col-md-4">
+                            <strong>Request Date:</strong><br />
+                            @item.CreatedAt.ToString("dd MMM yyyy, hh:mm tt")
+                        </div>
+
+                        <div class="col-md-4">
+                            <strong>Message:</strong><br />
+                            @item.Message
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <!-- ===== Student Information ===== -->
+                    <h6 class="fw-bold text-success">Student Information</h6>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong>Name:</strong> @item.StudentName
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Email:</strong> @item.StudentEmail
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Phone:</strong> @item.StudentPhone
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <strong>Student ID:</strong> @item.StudentId
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Department:</strong> @item.Department
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Semester:</strong> @item.Semester
+                        </div>
+                        <div class="col-md-3">
+                            <strong>CGPA:</strong> @item.CGPA
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <strong>Completed Credit:</strong> @item.Credit
+                    </div>
+
+                    <hr />
+
+                    <!-- ===== Psychologist Information ===== -->
+                    <h6 class="fw-bold text-danger">Psychologist Information</h6>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong>Name:</strong> @item.PsychologistName
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Email:</strong> @item.PsychologistEmail
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Phone:</strong> @item.PsychologistPhone
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong>Qualification:</strong> @item.Qualification
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Specialization:</strong> @item.Specialization
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Experience:</strong> @item.ExperienceYears Years
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-4">
+                            <strong>Severity Type:</strong>
+                            <span class="badge @(item.SeverityType == "Normal" ? "bg-success" :
+                                                                                                     item.SeverityType == "Medium" ? "bg-warning" :
+                                                                                                     "bg-danger")">
+                        @item.SeverityType
+                    </span>
+                </div>
+                                                                                                                                 <div class="row mb-3">
+                                                                                                                                     <div class="col-md-3">
+                                                                                                                                         <strong>Booking Serial:</strong><br />
+                                                                                                                                         @item.BookingSerial
+                                                                                                                                     </div>
+
+                    <div class="col-md-3">
+                        <strong>Appointment Date:</strong><br />
+                        @(item.AppointmentDate.HasValue
+                                                ? item.AppointmentDate.Value.ToString("dd MMM yyyy")
+                                                : "Not Scheduled")
+                                                              </div>
+
+                    <div class="col-md-3">
+                        <strong>Day:</strong><br />
+                        @item.AppointmentDay
+                    </div>
+
+                    <div class="col-md-3">
+                        <strong>Time:</strong><br />
+                        @(string.IsNullOrEmpty(item.AppointmentTime)
+                                                ? "Not Set"
+                                                : item.AppointmentTime)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <strong>Room:</strong> @item.Room
+                </div>
+            </div>
+
+                    <div class="mt-2">
+                        <strong>Bio:</strong>
+                        <p class="text-muted">@item.Bio</p>
+                    </div>
+
+                </div>
+            </div>
+
+        }
+
+        <!-- ===== Print Button ===== -->
+        <div class="text-end mt-3">
+            <button class="btn btn-outline-primary" onclick="window.print()">
+                🖨 Print Report
+            </button>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">
+            No counselling request data found.
+        </div>
+    }
+
+</div> *@
+@model List<SWMSU.Models.CounsellingRequest>
+
+@{
+    ViewData["Title"] = "Counselling Request Report";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    .pdf-report {
+        page-break-inside: avoid;
+        overflow: visible !important;
+    }
+</style>
+
+<div class="container mt-4">
+
+    <div class="text-center mb-4">
+        <h3 class="fw-bold">Counselling Request Report</h3>
+        <hr />
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <!-- PDF WRAPPER -->
+        <div id="report-@item.BookingSerial" class="pdf-report">
+            <div class="text-center mb-4">
+                <h5 class="fw-bold text-uppercase mb-1">
+                    International University of Business Agriculture and Technology (IUBAT)
+                </h5>
+                <p class="fst-italic mb-0">
+                    Counselling & Psychological Support Center
+                </p>
+                <hr />
+            </div>
+
+
+            <div class="card shadow mb-4">
+                <div class="card-body">
+
+
+                    <!-- ===== Appointment & Request Information Section ===== -->
+
+
+
+                    <div class="row">
+
+                        <!-- Left Side: Appointment Info -->
+                        <div class="col-md-6">
+                            <h6 class="fw-bold text-primary">Appointment Info</h6>
+
+                            <p><strong>Booking Serial:</strong> @item.BookingSerial</p>
+                            <p><strong>Date:</strong> @(item.AppointmentDate.HasValue? item.AppointmentDate.Value.ToString("dd MMM yyyy") : "Not Scheduled")</p>
+                            <p><strong>Day:</strong> @item.AppointmentDay</p>
+                            <p><strong>Time:</strong> @item.AppointmentTime</p>
+                            <p><strong>Room:</strong> @item.Room</p>
+                        </div>
+
+                        <!-- Right Side: Request Info -->
+                        <div class="col-md-6">
+                            <h6 class="fw-bold text-success">Request Info</h6>
+
+                            <p><strong>Status:</strong> @item.ApprovalStatus</p>
+                            <p><strong>Request Date:</strong> @item.CreatedAt.ToString("dd MMM yyyy hh:mm tt")</p>
+                            <p><strong>Message:</strong> @item.Message</p>
+                        </div>
+
+                    </div>
+
+                    <hr />
+
+                    <!-- ===== End Section ===== -->
+                    <!-- ===== Student & Psychologist Information ===== -->
+
+
+
+                    <div class="row">
+
+                        <!-- Left Side: Student Information -->
+                        <div class="col-md-6">
+                            <h6 class="fw-bold text-success">Student Information</h6>
+
+                            <p><strong>Name:</strong> @item.StudentName</p>
+                            <p><strong>Email:</strong> @item.StudentEmail</p>
+                            <p><strong>Phone:</strong> @item.StudentPhone</p>
+                            <p><strong>ID:</strong> @item.StudentId</p>
+                            <p><strong>Department:</strong> @item.Department</p>
+                            <p><strong>Semester:</strong> @item.Semester</p>
+                            <p><strong>CGPA:</strong> @item.CGPA</p>
+                            <p><strong>Completed Credit:</strong> @item.Credit</p>
+                        </div>
+
+                        <!-- Right Side: Psychologist Information -->
+                        <div class="col-md-6">
+                            <h6 class="fw-bold text-danger">Psychologist Information</h6>
+
+                            <p><strong>Name:</strong> @item.PsychologistName</p>
+                            <p><strong>Email:</strong> @item.PsychologistEmail</p>
+                            <p><strong>Phone:</strong> @item.PsychologistPhone</p>
+                            <p><strong>Qualification:</strong> @item.Qualification</p>
+                            <p><strong>Specialization:</strong> @item.Specialization</p>
+                            <p><strong>Experience:</strong> @item.ExperienceYears Years</p>
+                        </div>
+
+                    </div>
+
+                    <hr />
+                    <!-- ===== End Section ===== -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="text-center mt-4" style="font-size: 20px; color: #555;">
+                <p class="mb-0 fw-semibold">
+                    Stress & Wellness Monitoring System for University Students
+                </p>
+                <p class=" fst-italic mb-0">
+                    Department of Computer Science & Engineering, IUBAT
+                </p>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div id="downloadSection" class="text-end mb-5">
+                <button class="btn btn-success"
+                        onclick="downloadPdf('report-@item.BookingSerial','@item.StudentId')">
+                    ⬇ Download PDF
+                </button>
+            </div>
+
+
+        </div>
+    }
+</div>
+
+<!-- PDF LIB -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+    function downloadPdf(reportId, studentId) {
+
+        const element = document.getElementById(reportId);
+
+        const options = {
+            margin: 10,
+            filename: 'Counselling_Report_' + studentId + '.pdf',
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: {
+                scale: 3,
+                useCORS: true,
+                scrollY: 0
+            },
+            jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait'
+            },
+            pagebreak: { mode: ['css', 'legacy'] }
+        };
+
+        html2pdf().set(options).from(element).save();
+
+         document.getElementById("downloadSection").style.display = "none";
+
+    }
+</script>
+

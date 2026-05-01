@@ -1,0 +1,539 @@
+﻿@* @model List<SWMSU.Models.CounsellingRequest>
+
+@{
+    ViewData["Title"] = "Incoming Counselling Requests";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="container-fluid mt-4">
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white fw-bold">
+            Incoming Counselling Requests
+        </div>
+
+        <div class="card-body p-0">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle mb-0">
+                        <thead class="table-dark text-center">
+                            <tr>
+                                <th>Student</th>
+                                <th>Contact</th>
+                                <th>Department</th>
+                                <th>Message</th>
+                                <th>Status</th>
+                                <th>Request Date</th>
+                                <th>Booking #</th>
+                                <th>Appointment</th>
+                                <th>Day</th>
+                                <th>Time</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <strong>@item.StudentName</strong><br />
+                                        <small class="text-muted">@item.StudentEmail</small>
+                                    </td>
+
+                                    <td>@item.StudentPhone</td>
+
+                                    <td class="text-center">@item.Department</td>
+
+                                    <td>@item.Message</td>
+
+                                    <!-- STATUS -->
+                                    <td class="text-center">
+                                        @if (item.ApprovalStatus == "Pending")
+                                        {
+                                            <form asp-area="Psychologist"
+                                                  asp-controller="SendingRequest"
+                                                  asp-action="Approve"
+                                                  method="post"
+                                                  class="d-inline">
+                                                <input type="hidden" name="RequestId" value="@item.RequestId" />
+                                                <button class="btn btn-sm btn-success">
+                                                    Approve
+                                                </button>
+                                            </form>
+                                        }
+                                        else if (item.ApprovalStatus == "Approved")
+                                        {
+                                            <span class="badge bg-success">Approved</span>
+                                        }
+                                        else if (item.ApprovalStatus == "Completed")
+                                        {
+                                            <span class="badge bg-secondary">Completed</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">@item.ApprovalStatus</span>
+                                        }
+                                </td>
+
+                                <td class="text-center">
+                                    @item.CreatedAt.ToString("dd MMM yyyy")
+                                </td>
+
+                                <td class="text-center fw-bold">
+                                    @item.BookingSerial
+                                </td>
+
+                                <td class="text-center">
+                                    @(item.AppointmentDate.HasValue
+                                                                    ? item.AppointmentDate.Value.ToString("dd MMM yyyy")
+                                                                    : "Not Scheduled")
+                            </td>
+
+                                    <td class="text-center">@item.AppointmentDay</td>
+
+                                    <td class="text-center">@item.AppointmentTime</td>
+
+                                    <!-- ACTION -->
+                                    <td class="text-center">
+                                @if (item.ApprovalStatus == "Approved")
+                                        {
+                                            <button class="btn btn-sm btn-primary"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#messageModal-@item.BookingId">
+                                                Send Link
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info text-center m-3">
+                    No counselling requests found.
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- ================= MODALS ================= -->
+@foreach (var item in Model)
+{
+    <div class="modal fade" id="messageModal-@item.BookingId" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">
+                        Send Meet Link to @item.StudentName
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+
+                <form asp-area="Psychologist"
+                      asp-controller="SendingRequest"
+                      asp-action="SendMessage"
+                      method="post">
+
+                    <div class="modal-body">
+                        <input type="hidden" name="BookingId" value="@item.BookingId" />
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Google Meet Link</label>
+                            <input type="url"
+                                   class="form-control"
+                                   name="Message"
+                                   placeholder="https://meet.google.com/xxx-yyyy-zzz"
+                                   required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Appointment Time</label>
+                            <input type="text"
+                                   class="form-control"
+                                   value="@item.AppointmentTime"
+                                   readonly />
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">
+                            Send
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+} *@
+@model List<SWMSU.Models.CounsellingRequest>
+
+@{
+    ViewData["Title"] = "Incoming Counselling Requests";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="container mt-4">
+
+    <h4 class="fw-bold mb-3">Incoming Counselling Requests</h4>
+
+    @if (Model != null && Model.Any())
+    {
+        <table id="patienttable" class="table table-bordered table-striped" width="100%">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>Student Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Department</th>
+                  
+
+                    <th>ApprovalStatus</th>
+                  
+                    <th>Request Date</th>
+                    <th>Booking Serial</th>
+                    <th>Appointment Date</th>
+                    <th>Day</th>
+                    <th>Time</th>
+                    <th>Action</th>
+                    <th>CompleteStatus</th>
+                    <th>AbsentStatus</th>
+                    <th>SendPrescription</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.StudentName</td>
+                        <td>@item.StudentEmail</td>
+                        <td>@item.StudentPhone</td>
+                        <td class="text-center">@item.Department</td>
+
+                        <!-- STATUS / APPROVE -->
+                        <td class="text-center">
+                            @if (item.ApprovalStatus == "Pending")
+                            {
+                                <form asp-area="Psychologist"
+                                      asp-controller="SendingRequest"
+                                      asp-action="Approve"
+                                      method="post"
+                                      class="d-inline">
+                                    <input type="hidden" name="BookingId" value="@item.BookingId" />
+                                    <button type="submit" class="btn btn-sm btn-success">
+                                        Approve
+                                    </button>
+                                </form>
+                            }
+                            else if (item.ApprovalStatus == "Approved")
+                            {
+                                <span class="badge bg-success">Approved</span>
+                            }
+                            else if (item.ApprovalStatus == "Completed")
+                            {
+                                <span class="badge bg-secondary">Completed</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">@item.ApprovalStatus</span>
+                            }
+                    </td>
+
+                    <td class="text-center">
+                        @item.CreatedAt.ToString("dd MMM yyyy")
+                    </td>
+
+                    <td class="text-center">
+                        @item.BookingSerial
+                    </td>
+
+                    <td class="text-center">
+                        @(item.AppointmentDate.HasValue
+                                            ? item.AppointmentDate.Value.ToString("dd MMM yyyy")
+                                            : "Not Scheduled")
+                </td>
+
+                        <td class="text-center">
+                            @item.AppointmentDay
+                        </td>
+
+                        <td class="text-center">
+                            @item.AppointmentTime
+                        </td>
+
+                        <!-- SEND LINK -->
+                        <td class="text-center">
+                    @if (item.ApprovalStatus == "Approved")
+                            {
+                                <button class="btn btn-sm btn-primary"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#messageModal-@item.BookingId">
+                                    Send Link
+                                </button>
+                            }
+                            else
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                        </td>
+
+
+                        <td class="text-center">
+                            @if (item.ApprovalStatus == "Approved")
+                            {
+                                <form asp-area="Psychologist"
+                                      asp-controller="SendingRequest"
+                                      asp-action="Completed"
+                                      method="post">
+                                    <input type="hidden" name="BookingId" value="@item.BookingId" />
+                                    <button class="btn btn-sm btn-outline-success">
+                                        Complete
+                                    </button>
+                                </form>
+                            }
+                            else if (item.ApprovalStatus == "Completed")
+                            {
+                                <span class="badge bg-secondary">Completed</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                        </td>
+                        <td class="text-center">
+                            @if (item.ApprovalStatus == "Approved")
+                            {
+                                <form asp-area="Psychologist"
+                                      asp-controller="SendingRequest"
+                                      asp-action="Absent"
+                                      method="post">
+                                    <input type="hidden" name="BookingId" value="@item.BookingId" />
+                                    <button class="btn btn-sm btn-outline-success">
+                                        Absent
+                                    </button>
+                                </form>
+                            }
+                            else if (item.ApprovalStatus == "Absent")
+                            {
+                                <span class="badge bg-secondary">Absent</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                        <td class="text-center">
+                            @if (item.ApprovalStatus == "Approved"
+                                                || item.ApprovalStatus == "Complete")
+                            @* || item.ApprovalStatus == "Absent") *@
+                            {
+                                @* <form asp-area="Psychologist"
+              asp-controller="SendingRequest"
+              asp-action="Prescrisption"
+              method="post">
+            <input type="hidden" name="BookingId" value="@item.BookingId" />
+            <button class="btn btn-sm btn-outline-success">
+                SendPrescription
+            </button>
+        </form> *@
+                                <a asp-controller="SendingRequest" asp-action="Prescription" asp-route-bookingId="@item.BookingId" class="btn btn-sm mb-1" style="width:120px; height:40px; background-color:#4a90e2; color:#fff;">
+                                    <i class="fa fa-file-medical me-1"></i> Prescription
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+            @* <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.StudentName</td>
+                        <td>@item.StudentEmail</td>
+                        <td>@item.StudentPhone</td>
+                        <td class="text-center">@item.Department</td>
+                  
+
+
+                        <!-- ===== STATUS / APPROVE ===== -->
+                        <td class="text-center">
+                            @if (item.ApprovalStatus == "Pending")
+                            {
+                                <form asp-area="Psychologist"
+                                      asp-controller="SendingRequest"
+                                      asp-action="Approve"
+                                      method="post"
+                                      class="d-inline">
+                                    <input type="hidden" name="BookingId" value="@item.BookingId" />
+                                    <button type="submit" class="btn btn-sm btn-success">
+                                        Approve
+                                    </button>
+                                </form>
+                            }
+                            else if (item.ApprovalStatus == "Approved")
+                            {
+                                <span class="badge bg-success">Approved</span>
+                            }
+                            else if (item.ApprovalStatus == "Completed")
+                            {
+                                <span class="badge bg-secondary">Completed</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">@item.ApprovalStatus</span>
+                            }
+                        </td>
+
+                        <td class="text-center">
+                            @if (item.ApprovalStatus == "Approved")
+                            {
+                                <form asp-area="Psychologist"
+                                      asp-controller="SendingRequest"
+                                      asp-action="Completed"
+                                      method="post">
+                                    <input type="hidden" name="BookingId" value="@item.BookingId" />
+                                    <button class="btn btn-sm btn-primary">
+                                        Complete
+                                    </button>
+                                </form>
+                            }
+                            else if (item.ApprovalStatus == "Completed")
+                            {
+                                <span class="badge bg-secondary">Completed</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                        </td>
+
+                        <td class="text-center">
+                            @item.CreatedAt.ToString("dd MMM yyyy")
+                        </td>
+
+                        <td class="text-center">
+                            @item.BookingSerial
+                        </td>
+
+                        <td class="text-center">
+                            @(item.AppointmentDate.HasValue? item.AppointmentDate.Value.ToString("dd MMM yyyy") : "Not Scheduled")
+                        </td>
+
+                        <td class="text-center">
+                            @item.AppointmentDay
+                        </td>
+
+                        <td class="text-center">
+                            @item.AppointmentTime
+                        </td>
+
+                        <!-- ===== SEND LINK ===== -->
+                        <td class="text-center">
+                            @if (item.ApprovalStatus == "Approved")
+                            {
+                                <button class="btn btn-sm btn-primary"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#messageModal-@item.BookingId">
+                                    Send Link
+                                </button>
+                            }
+                            else
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody> *@
+     
+
+        <!-- ================= MODALS ================= -->
+        @foreach (var item in Model)
+        {
+            <div class="modal fade" id="messageModal-@item.BookingId" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                Send Meet Link to @item.StudentName
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <form asp-area="Psychologist"
+                              asp-controller="SendingRequest"
+                              asp-action="SendMessage"
+                              method="post">
+
+                            <div class="modal-body">
+                                <input type="hidden" name="BookingId" value="@item.BookingId" />
+
+                                <div class="mb-3">
+                                    <label class="form-label">Google Meet Link</label>
+                                    <input type="url"
+                                           class="form-control"
+                                           name="Message"
+                                           placeholder="https://meet.google.com/abc-defg-hij"
+                                           required />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Appointment Time</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           name="AppointmentTime"
+                                           value="@item.AppointmentTime"
+                                           readonly />
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">
+                                    Send Message
+                                </button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    Close
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-info text-center">
+            No counselling requests found.
+        </div>
+    }
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#patienttable').DataTable();
+        });
+    </script>
+}

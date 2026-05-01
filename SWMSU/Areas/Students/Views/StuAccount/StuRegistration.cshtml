@@ -1,0 +1,121 @@
+﻿@model SWMSU.Models.Student
+
+@{
+    ViewData["Title"] = "Student Registration";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header text-center bg-gradient-primary text-white rounded-top-4 py-4">
+                    <h3 class="mb-0">Student Registration</h3>
+                </div>
+
+                <div class="card-body p-5">
+                    @if (TempData["error"] != null)
+                    {
+                        <div class="alert alert-danger text-center">
+                            @TempData["error"]
+                        </div>
+                    }
+
+                    <form asp-action="StuRegistration" method="post" class="needs-validation" novalidate>
+                        <!-- Student Varsity ID -->
+                        <div class="mb-3">
+                            <label asp-for="StudentVarsityId" class="form-label">Student Varsity ID</label>
+                            <input asp-for="StudentVarsityId" class="form-control shadow-sm" placeholder="Enter Varsity ID" required />
+                        </div>
+
+                        <!-- Student Name -->
+                        <div class="mb-3">
+                            <label asp-for="StudentName" class="form-label">Full Name</label>
+                            <input asp-for="StudentName" class="form-control shadow-sm" placeholder="Enter Full Name" required />
+                        </div>
+
+                        <!-- Current Semester -->
+                        <div class="mb-3">
+                            <label asp-for="CurrentSemester" class="form-label">Current Semester</label>
+                            <input asp-for="CurrentSemester" type="number" min="1" max="12" class="form-control shadow-sm" placeholder="Ex: 5" required />
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label asp-for="StudentEmail" class="form-label">Email</label>
+                            <input asp-for="StudentEmail" type="email" class="form-control shadow-sm" placeholder="Enter Email" required />
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label asp-for="StudentPassword" class="form-label">Password</label>
+                            <input asp-for="StudentPassword" type="password" class="form-control shadow-sm" placeholder="Enter Password" required />
+                        </div>
+
+                        <!-- Current Credit -->
+                        <div class="mb-3">
+                            <label asp-for="CreditCurrent" class="form-label">Current Credit</label>
+                            <input asp-for="CreditCurrent" type="number" class="form-control shadow-sm" placeholder="Enter current credit" required />
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="mb-3">
+                            <label asp-for="StudentPhone" class="form-label">Phone</label>
+                            <input asp-for="StudentPhone" type="tel" class="form-control shadow-sm" placeholder="Enter Phone Number" />
+                        </div>
+
+                        <!-- Permanent Address -->
+                        <div class="mb-3">
+                            <label asp-for="StudentPermanentAddress" class="form-label">Permanent Address</label>
+                            <input asp-for="StudentPermanentAddress" class="form-control shadow-sm" placeholder="Enter Address" />
+                        </div>
+
+                        <!-- Blood Group -->
+                        <div class="mb-3">
+                            <label asp-for="StudentBloodGroup" class="form-label">Blood Group</label>
+                            <select asp-for="StudentBloodGroup" class="form-select shadow-sm">
+                                <option value="">-- Select --</option>
+                                <option>A+</option>
+                                <option>A-</option>
+                                <option>B+</option>
+                                <option>B-</option>
+                                <option>AB+</option>
+                                <option>AB-</option>
+                                <option>O+</option>
+                                <option>O-</option>
+                            </select>
+                        </div>
+
+                        <!-- Hidden Role -->
+                        <input type="hidden" asp-for="Role" value="Student" />
+
+                        <button type="submit" class="btn btn-gradient-primary w-100 py-2 mt-4 text-white fw-bold rounded-3">
+                            Register
+                        </button>
+                    </form>
+                </div>
+
+                <div class="card-footer text-center py-3 bg-light rounded-bottom-4">
+                    Already have an account? <a asp-action="StuLogin" class="text-primary fw-bold">Login</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Gradient button */
+    .btn-gradient-primary {
+        background: linear-gradient(135deg, #4e73df, #1cc88a);
+        border: none;
+    }
+
+        .btn-gradient-primary:hover {
+            opacity: 0.9;
+        }
+
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #4e73df, #1cc88a) !important;
+    }
+</style>
